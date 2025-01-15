@@ -122,7 +122,7 @@ public class Board
             Console.WriteLine("Trafienie!");
             return true;
         }
-        else if (botBoard[x, y] == '~') // '~' oznacza wodę
+        else if (botBoard[x, y] == '-') // '-' oznacza wodę
         {
             botBoard[x, y] = 'O'; // 'O' oznacza pudło
             Console.WriteLine("Pudło.");
@@ -151,7 +151,7 @@ public class Board
             playerBoard[x, y] = 'X'; // 'X' oznacza trafienie
             Console.WriteLine("Bot trafił twój statek!");
         }
-        else if (playerBoard[x, y] == '~') // '~' oznacza wodę
+        else if (playerBoard[x, y] == '-') // '-' oznacza wodę
         {
             playerBoard[x, y] = 'O'; // 'O' oznacza pudło
             Console.WriteLine("Bot pudłuje.");
