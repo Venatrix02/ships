@@ -107,6 +107,69 @@ public class Board
             Console.WriteLine();
         }
     }
+    // Funkcja odpowiedzialna za strzelanie gracza
+    public bool PlayerShoot(int x, int y)
+    {
+        if (!IsValidCoordinate(x, y))
+        {
+            Console.WriteLine("Nieprawidłowe współrzędne. Strzał nieudany.");
+            return false;
+        }
+
+        if (botBoard[x, y] == 'S') // 'S' oznacza statek
+        {
+            botBoard[x, y] = 'X'; // 'X' oznacza trafienie
+            Console.WriteLine("Trafienie!");
+            return true;
+        }
+        else if (botBoard[x, y] == '~') // '~' oznacza wodę
+        {
+            botBoard[x, y] = 'O'; // 'O' oznacza pudło
+            Console.WriteLine("Pudło.");
+            return false;
+        }
+        else
+        {
+            Console.WriteLine("Już strzelałeś w to miejsce!");
+            return false;
+        }
+    }
+    // Funkcja odpowiedzialna za ruch bota
+    public void BotMove()
+    {
+        int x, y;
+        do
+        {
+            x = random.Next(0, BoardSize); // Losowanie współrzędnych
+            y = random.Next(0, BoardSize);
+        } while (!IsValidBotMove(x, y));
+
+        Console.WriteLine($"Bot strzela w ({x}, {y})");
+
+        if (playerBoard[x, y] == 'S') // 'S' oznacza statek
+        {
+            playerBoard[x, y] = 'X'; // 'X' oznacza trafienie
+            Console.WriteLine("Bot trafił twój statek!");
+        }
+        else if (playerBoard[x, y] == '~') // '~' oznacza wodę
+        {
+            playerBoard[x, y] = 'O'; // 'O' oznacza pudło
+            Console.WriteLine("Bot pudłuje.");
+        }
+    }
+    // Sprawdzenie poprawności współrzędnych dla strzelania
+    private bool IsValidCoordinate(int x, int y)
+    {
+        return x >= 0 && x < BoardSize && y >= 0 && y < BoardSize;
+    }
+
+    // Sprawdzenie, czy bot może strzelić w dane miejsce
+    private bool IsValidBotMove(int x, int y)
+    {
+        return playerBoard[x, y] != 'X' && playerBoard[x, y] != 'O'; // Nie strzela w trafione/pudła
+    }
+
+
 }
 
 public class Ship
@@ -124,3 +187,6 @@ public class Ship
         Horizontal = horizontal;
     }
 }
+
+
+
