@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-class statki1
+class Program
 {
     static void Main()
     {
@@ -27,7 +27,11 @@ public class Game
         Console.WriteLine("Gra w statki!");
         while (!enemyBoard.AllShipsSunk())
         {
+            Console.WriteLine("Twoja plansza:");
             playerBoard.Display();
+            Console.WriteLine("Plansza przeciwnika:");
+            enemyBoard.Display();
+
             Console.Write("Podaj współrzędne (np. A1): ");
             string input = Console.ReadLine();
             if (enemyBoard.Attack(input))
@@ -64,7 +68,7 @@ public class Board
             {
                 int x = ship.Horizontal ? ship.X + i : ship.X;
                 int y = ship.Horizontal ? ship.Y : ship.Y + i;
-                grid[x, y] = 'S';
+                grid[x, y] = 'o';
             }
         }
     }
@@ -73,9 +77,14 @@ public class Board
     {
         int x = position[1] - '1';
         int y = position[0] - 'A';
-        if (grid[x, y] == 'S')
+        if (grid[x, y] == 'o')
         {
-            grid[x, y] = 'X';
+            grid[x, y] = 't';
+            return true;
+        }
+        else if (grid[x, y] == 'S')
+        {
+            grid[x, y] = 'x';
             return true;
         }
         grid[x, y] = 'O';
@@ -90,7 +99,7 @@ public class Board
             {
                 int x = ship.Horizontal ? ship.X + i : ship.X;
                 int y = ship.Horizontal ? ship.Y : ship.Y + i;
-                if (grid[x, y] == 'S') return false;
+                if (grid[x, y] == 'o') return false;
             }
         }
         return true;
